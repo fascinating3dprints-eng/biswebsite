@@ -1,75 +1,205 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<style type="text/css">
-			.no-overlap-text {
-				white-space: nowrap;
-				text-overflow: ellipsis;
-			}
-			.img_deg { 
-				margin-bottom: auto;
-				margin-right: auto;
-				margin-left: auto;
-				margin-top: -15px;
-				display: block;
-				text-align: center;
-				float: left;
-			}
-			p {
-			color: black;
-			font-family: sans-serif;
-			}
-			li {
-				margin-bottom: 50px;
-			}
-			.att1 {
-				float: left;
-				margin-top: -4px;
-			}
-			.att2 {
-				float:left;
-				margin-top:-28px;
-			}
-		</style>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>3d Prints</title>
-	</head>
-	<body style="background-color: #bae2f4">
-		<div class="image-container">
-			<img width=100% src="3d_Prints_and_More!_20250907_082207_0000.png")>
-			<p><center><b><h1>Products</h1></b></center></p>
-			<img class="att1" width=3.25% length=3.4% src="limitedlarryscreen.png">
-			<p><li>limited edition fidget skeleton 50% off 3.00$ now 1.50$. Larry from Clash Royal. Image to the left.</li></p>
-			<img class="img_deg" width=4.2% src="testorreal.jpg")>
-			<p><li>spiral fidgit cone. Price:3.00$. Image to the left.</li></p>
-			<img class="att2" width=5.95% src="IMG_0189-removebg-preview.png">
-			<p><li>Hexigon fidgit price 3.00$</li></p>
-			<p><li>More products will be added shortly.</li></p>
-			<!--<p><li>3d print</li></p>
-			<p><li>3d print</li></p>	
-			<p><li>3d print</li></p>
-			<p><li>3d print</li></p>
-			<p><li>3d print</li></p>-->
-			<p><li>3d Print Order request. For an order request please send us a model of the product you want us to print.</li></p>
-			<center><p>For purchase contact us at fascinating3dprints@gmail.com</p><center>
-		</div>  
-		<style>
-		/*	.image-container { 
-				position: relative;
-			 	background-image: url("3d_Prints_and_More!_20250907_082207_0000.png");
-			 	background-size: cover;
-			 	background-repeat: no-repeat;
-			 	background-position: center;
-			 	overflow: auto;
-				align-items: center;
-				justify-content: center;
-				display: flex;
-			}
-		</style> 
-	</body>   
-</html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Prints</title>
+  <style>
+    /* ===== RESET ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    /* ===== GLOBAL ===== */
+    body {
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background-color: #e8f6fc;
+      color: #222;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    a {
+      color: #0077b6;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      text-align: center;
+      background-color: #bce0f5;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    header h1 {
+      margin-top: 20px;
+      font-size: 2.2rem;
+      color: #004e89;
+    }
+
+    /* ===== PRODUCT GRID ===== */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 16px;
+      flex-grow: 1;
+    }
+
+    .product-info h2 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      color: #004e89;
+    }
+
+    .product-info p {
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #0077b6;
+    }
+
+    .discount {
+      color: #d62828;
+      text-decoration: line-through;
+      margin-right: 6px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      background-color: #bce0f5;
+      padding: 20px;
+      font-size: 1rem;
+      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+      .product-info h2 {
+        font-size: 1rem;
+      }
+      .product-info p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="3d_Prints_and_More!_20250907_082207_0000.png" alt="3D Prints and More banner" />
+    <h1>Our 3D Printed Products</h1>
+  </header>
+
+  <main>
+    <div class="product-card">
+      <img src="limitedlarryscreen.png" alt="Limited Edition Fidget Skeleton Larry" />
+      <div class="product-info">
+        <h2>Limited Edition Fidget Skeleton</h2>
+        <p>Featuring Larry from <em>Clash Royale</em>.</p>
+        <p><span class="discount">$3.00</span> <span class="price">$1.50</span> — 50% off!</p>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="testorreal.jpg" alt="Spiral Fidget Cone" />
+      <div class="product-info">
+        <h2>Spiral Fidget Cone</h2>
+        <p>Perfect for satisfying spins and twists.</p>
+        <p><span class="price">$3.00</span></p>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="IMG_0189-removebg-preview.png" alt="Hexagon Fidget" />
+      <div class="product-info">
+        <h2>Hexagon Fidget</h2>
+        <p>Simple geometric design for a smooth feel.</p>
+        <p><span class="price">$3.00</span></p>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="placeholder.jpg" alt="Upcoming Products" />
+      <div class="product-info">
+        <h2>More Products Coming Soon</h2>
+        <p>Check back later for exciting new prints!</p>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="placeholder-custom.jpg" alt="Custom 3D Print Order" />
+      <div class="product-info">
+        <h2>Custom 3D Print Orders</h2>
+        <p>Send us your model — we’ll bring it to life!</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      For purchase or custom orders, email us at 
+      <a href="mailto:fascinating3dprints@gmail.com">fascinating3dprints@gmail.com</a>
+    </p>
+  </footer>
+</body>
+</html>
 
 
 		
