@@ -3,77 +3,174 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3D Prints</title>
+  <title>3D Prints Store</title>
   <style>
     /* ===== RESET ===== */
-    * {
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    /* ===== VARIABLES ===== */
+    :root {
+      --primary: #0077b6;
+      --accent: #004e89;
+      --bg: #e8f6fc;
+      --text: #222;
+      --card-bg: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --primary: #48cae4;
+      --accent: #caf0f8;
+      --bg: #121212;
+      --text: #f1f1f1;
+      --card-bg: #1e1e1e;
+      --shadow: rgba(255, 255, 255, 0.08);
+    }
+
     /* ===== GLOBAL ===== */
     body {
       font-family: "Segoe UI", Roboto, sans-serif;
-      background-color: #e8f6fc;
-      color: #222;
+      background-color: var(--bg);
+      color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     img {
-      max-width: 100%;
+      width: 100%;
       height: auto;
       display: block;
       border-radius: 10px;
     }
 
     a {
-      color: #0077b6;
+      color: var(--primary);
       text-decoration: none;
+      transition: color 0.2s;
     }
 
     a:hover {
-      text-decoration: underline;
+      color: var(--accent);
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--card-bg);
+      padding: 12px 20px;
+      box-shadow: 0 2px 6px var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+      gap: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-container {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+      max-width: 280px;
+    }
+
+    .search-container input {
+      width: 100%;
+      padding: 8px 34px 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--primary);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.95rem;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .search-container input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--card-bg);
+    }
+
+    .search-container span {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      pointer-events: none;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.4rem;
+      color: var(--accent);
+      transition: transform 0.2s;
+    }
+
+    .theme-toggle:hover {
+      transform: rotate(15deg);
     }
 
     /* ===== HEADER ===== */
     header {
       text-align: center;
-      background-color: #bce0f5;
-      padding: 20px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 10px 20px;
     }
 
     header img {
-      width: 100%;
-      height: auto;
       border-radius: 12px;
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
     }
 
     header h1 {
-      margin-top: 20px;
-      font-size: 2.2rem;
-      color: #004e89;
+      margin-top: 18px;
+      font-size: clamp(1.8rem, 2vw + 1rem, 2.5rem);
+      color: var(--accent);
     }
 
-    /* ===== PRODUCT GRID ===== */
+    /* ===== GRID ===== */
     main {
       flex: 1;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
-      padding: 30px;
-      max-width: 1200px;
+      padding: clamp(16px, 3vw, 40px);
+      max-width: 1300px;
       margin: 0 auto;
     }
 
     .product-card {
-      background-color: #fff;
+      background-color: var(--card-bg);
       border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px var(--shadow);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -81,14 +178,14 @@
     }
 
     .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px var(--shadow);
     }
 
-    .product-card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
+    .product-card.first img {
+      object-fit: contain;
+      background-color: #f4f8fa;
+      padding: 10px;
     }
 
     .product-info {
@@ -99,17 +196,17 @@
     .product-info h2 {
       font-size: 1.2rem;
       margin-bottom: 8px;
-      color: #004e89;
+      color: var(--accent);
     }
 
     .product-info p {
-      margin-bottom: 10px;
       font-size: 0.95rem;
+      margin-bottom: 8px;
     }
 
     .price {
       font-weight: bold;
-      color: #0077b6;
+      color: var(--primary);
     }
 
     .discount {
@@ -118,37 +215,64 @@
       margin-right: 6px;
     }
 
+    /* ===== TEXT SECTIONS ===== */
+    .info-text {
+      grid-column: 1 / -1;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 2px 6px var(--shadow);
+      padding: clamp(16px, 2vw, 24px);
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    .info-text h2 {
+      color: var(--accent);
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
     /* ===== FOOTER ===== */
     footer {
       text-align: center;
-      background-color: #bce0f5;
+      background-color: var(--card-bg);
       padding: 20px;
-      font-size: 1rem;
-      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+      font-size: clamp(0.9rem, 1vw + 0.5rem, 1rem);
+      box-shadow: 0 -2px 6px var(--shadow);
+      margin-top: auto;
+      transition: background-color 0.3s;
     }
 
-    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.6rem;
-      }
-      .product-info h2 {
-        font-size: 1rem;
-      }
-      .product-info p {
-        font-size: 0.9rem;
+      main {
+        gap: 16px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- ===== NAVIGATION ===== -->
+  <nav>
+    <div class="logo">3D Prints</div>
+
+    <div class="nav-actions">
+      <div class="search-container">
+        <input type="text" id="search" placeholder="Search products..." />
+        <span>🔍</span>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" title="Toggle Dark Mode">🌙</button>
+    </div>
+  </nav>
+
+  <!-- ===== HEADER ===== -->
   <header>
-    <img src="3d_Prints_and_More!_20250907_082207_0000.png" alt="3D Prints and More banner" />
+    <img src="3d_Prints_and_More!_20250907_082207_0000.png" alt="3D Prints banner" />
     <h1>Our 3D Printed Products</h1>
   </header>
 
-  <main>
-    <div class="product-card">
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="products">
+    <div class="product-card first">
       <img src="limitedlarryscreen.png" alt="Limited Edition Fidget Skeleton Larry" />
       <div class="product-info">
         <h2>Limited Edition Fidget Skeleton</h2>
@@ -175,31 +299,52 @@
       </div>
     </div>
 
-    <div class="product-card">
-      <img src="placeholder.jpg" alt="Upcoming Products" />
-      <div class="product-info">
-        <h2>More Products Coming Soon</h2>
-        <p>Check back later for exciting new prints!</p>
-      </div>
+    <div class="info-text">
+      <h2>More Products Coming Soon</h2>
+      <p>We’re always working on new designs — check back soon for fresh 3D prints and creative ideas!</p>
     </div>
 
-    <div class="product-card">
-      <img src="placeholder-custom.jpg" alt="Custom 3D Print Order" />
-      <div class="product-info">
-        <h2>Custom 3D Print Orders</h2>
-        <p>Send us your model — we’ll bring it to life!</p>
-      </div>
+    <div class="info-text">
+      <h2>Custom 3D Print Orders</h2>
+      <p>Have an idea or a 3D model? Send it our way — we’ll print it for you with precision and care!</p>
     </div>
   </main>
 
+  <!-- ===== FOOTER ===== -->
   <footer>
-    <p>
-      For purchase or custom orders, email us at 
+    <p>For purchases or inquiries, contact us at 
       <a href="mailto:fascinating3dprints@gmail.com">fascinating3dprints@gmail.com</a>
     </p>
   </footer>
+
+  <!-- ===== SCRIPT ===== -->
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById("theme-toggle");
+    const currentTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", currentTheme);
+    themeToggle.textContent = currentTheme === "dark" ? "☀️" : "🌙";
+
+    themeToggle.addEventListener("click", () => {
+      const newTheme = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+      themeToggle.textContent = newTheme === "dark" ? "☀️" : "🌙";
+    });
+
+    // Search Filter
+    const searchInput = document.getElementById("search");
+    const products = document.querySelectorAll(".product-card");
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase();
+      products.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(query) ? "flex" : "none";
+      });
+    });
+  </script>
 </body>
 </html>
-
 
 		
