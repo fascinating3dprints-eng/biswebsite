@@ -87,7 +87,7 @@
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
@@ -124,7 +124,7 @@
       pointer-events: none;
     }
 
-    .theme-toggle {
+    .theme-toggle, .view-toggle {
       background: none;
       border: none;
       cursor: pointer;
@@ -133,7 +133,7 @@
       transition: transform 0.2s;
     }
 
-    .theme-toggle:hover {
+    .theme-toggle:hover, .view-toggle:hover {
       transform: rotate(15deg);
     }
 
@@ -156,7 +156,7 @@
       color: var(--accent);
     }
 
-    /* ===== GRID ===== */
+    /* ===== MAIN GRID ===== */
     main {
       flex: 1;
       display: grid;
@@ -165,6 +165,21 @@
       padding: clamp(16px, 3vw, 40px);
       max-width: 1300px;
       margin: 0 auto;
+      transition: all 0.3s ease;
+    }
+
+    /* ===== SCROLL MODE ===== */
+    main.scroll-mode {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 16px;
+      padding: 20px;
+    }
+
+    main.scroll-mode .product-card {
+      flex: 0 0 80%;
+      scroll-snap-align: start;
     }
 
     .product-card {
@@ -242,24 +257,18 @@
       margin-top: auto;
       transition: background-color 0.3s;
     }
-
-    @media (max-width: 600px) {
-      main {
-        gap: 16px;
-      }
-    }
   </style>
 </head>
 <body>
   <!-- ===== NAVIGATION ===== -->
   <nav>
     <div class="logo">3D Prints</div>
-
     <div class="nav-actions">
       <div class="search-container">
         <input type="text" id="search" placeholder="Search products..." />
         <span>🔍</span>
       </div>
+      <button class="view-toggle" id="view-toggle" title="Toggle View Mode">🧱</button>
       <button class="theme-toggle" id="theme-toggle" title="Toggle Dark Mode">🌙</button>
     </div>
   </nav>
@@ -306,13 +315,13 @@
 
     <div class="info-text">
       <h2>Custom 3D Print Orders</h2>
-      <p>Have an idea or a 3D model? Send it our way — we’ll print it for you with precision and care!</p>
+      <p>Have an idea or a 3D model? Send it to us and we will get it to you as quickly as possible!</p>
     </div>
   </main>
 
   <!-- ===== FOOTER ===== -->
   <footer>
-    <p>For purchases please contact us at 
+    <p>For purchase please contact us at 
       <a href="mailto:fascinating3dprints@gmail.com">fascinating3dprints@gmail.com</a>
     </p>
   </footer>
@@ -342,6 +351,17 @@
         const text = card.innerText.toLowerCase();
         card.style.display = text.includes(query) ? "flex" : "none";
       });
+    });
+
+    // View Mode Toggle
+    const viewToggle = document.getElementById("view-toggle");
+    const mainContainer = document.getElementById("products");
+    let scrollMode = false;
+
+    viewToggle.addEventListener("click", () => {
+      scrollMode = !scrollMode;
+      mainContainer.classList.toggle("scroll-mode", scrollMode);
+      viewToggle.textContent = scrollMode ? "↔️" : "🧱";
     });
   </script>
 </body>
